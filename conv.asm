@@ -26,8 +26,53 @@ conv:
 	move $t0 $a0
     move $t1 $a1
     move $t2 $a2
-
+    # load len of results
+    move $t3 $a3
     
+    li $t4, 0
+    forloopi:
+    bge, $t4, $t3, endforloopi
+
+        li $t5, 0
+        li $s7, 3
+        forloopj:
+        bge $t5, $s7, endforloopj
+
+        #Result[i] += inp[i+j] * filt[j]
+        addu $t6 $t4 $t5
+        li $s1 4
+        mult $s1, $t6
+        mflo $t6
+        addu $t6 $t6 $t0
+        lw $t6 0($t6)
+
+
+        addu $t7 $zero $t5
+        mult $s1, $t7
+        mflo $t7
+        addu $t7 $t7 $t1
+        lw $t7 0($t7)
+
+        mult $t6 $t7
+        mflo $t7
+
+        mult $s1, $t4
+        mflo $t6
+        addu $t6, $t6, $t2
+        lw $s0 0($t6)
+        add $t7, $s0, $t7
+        sw $t7 0($t6)
+
+
+
+        addi $t5 $t5 1
+        j forloopj
+        endforloopj:
+
+    addi $t4 $t4 1
+    j forloopi
+    endforloopi:
+
 
     return:
         jr $ra
