@@ -62,6 +62,7 @@ FizzBuzz:
             li $v0, 4
             la $a0, buzz
             syscall
+            j endnested
 
         divbyboth:
             li $v0, 4
