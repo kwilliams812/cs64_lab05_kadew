@@ -72,11 +72,10 @@ FizzBuzz:
         endnested:
 
         addiu $t0, $t0, 4
-        add $t2, $t2, 1
+        addi $t2, $t2, 1
         j forloop
     endforloop:
 
-    syscall
 
     return:
         jr $ra
